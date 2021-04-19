@@ -31,7 +31,8 @@ def win32():
     SetValueEx(key, "DisableRegistryTools", 0, REG_DWORD, 1)
     CloseKey(key)
 def linux():
-    
+    # Coming soon........
+   
 # Выбор метода установки взависимости от ОС и установка
 if platform == "linux" or platform == "linux2":
     linux()
