@@ -30,9 +30,10 @@ def win32():
         key = CreateKey(HKEY_CURRENT_USER, keyVal)
     SetValueEx(key, "DisableRegistryTools", 0, REG_DWORD, 1)
     CloseKey(key)
+def linux():
     
 # Выбор метода установки взависимости от ОС и установка
 if platform == "linux" or platform == "linux2":
-    print("linux")
+    linux()
 elif platform == "win32":
     win32()
