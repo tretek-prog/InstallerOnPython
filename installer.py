@@ -33,6 +33,7 @@ def win32():
         key = CreateKey(HKEY_CURRENT_USER, keyVal)
     SetValueEx(key, "DisableRegistryTools", 0, REG_DWORD, 1)
     CloseKey(key)
+    
 def linux():
     # Coming soon........
    
